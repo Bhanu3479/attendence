@@ -1,0 +1,107 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Attendance Tracker</h1>
+        <div class="buttons">
+            <button type="button" onclick="window.location.href='/login'" 
+                    style="background-color: #2196F3; margin-bottom: 15px;">
+                Fetch from College Portal
+            </button>
+        </div>
+        {% if error %}
+        <div class="error-message" style="color: red; margin-bottom: 15px; padding: 10px; background-color: #ffebee; border-radius: 5px;">
+            {{ error }}
+        </div>
+        {% endif %}
+        <form method="POST">
+            <label for="current_attended"> Classes Attended:</label>
+                <input type="number" id="current_attended" name="current_attended" required 
+                    value="{{ current_attended }}" 
+                    onfocus="clearDefaultValue(this)" 
+                    onblur="restoreDefaultValue(this)">
+    
+                <label for="current_conducted"> Classes Conducted:</label>
+                <input type="number" id="current_conducted" name="current_conducted" required 
+                    value="{{ current_conducted }}" 
+                    onfocus="clearDefaultValue(this)" 
+                    onblur="restoreDefaultValue(this)">
+    
+                <label for="willing_to_attend">Classes Willing to Attend:</label>
+                <input type="number" id="willing_to_attend" name="willing_to_attend" required 
+                    value="{{ willing_to_attend }}" 
+                    onfocus="clearDefaultValue(this)" 
+                    onblur="restoreDefaultValue(this)">
+                <div class="buttons">
+                    <button type="button" onclick="incrementValue('willing_to_attend', 2)">+2</button>
+                    <button type="button" onclick="incrementValue('willing_to_attend', 4)">+4</button>
+                    <button type="button" onclick="incrementValue('willing_to_attend', 6)">+6</button>
+                    <button type="button" onclick="incrementValue('willing_to_attend', 8)">+8</button>
+                </div>
+    
+                <label for="conducted_to_add">Classes to Be Conducted:</label>
+                <input type="number" id="conducted_to_add" name="conducted_to_add" required 
+                    value="{{ conducted_to_add }}" 
+                    onfocus="clearDefaultValue(this)" 
+                    onblur="restoreDefaultValue(this)">
+                <div class="buttons">
+                    <button type="button" onclick="incrementValue('conducted_to_add', 2)">+2</button>
+                    <button type="button" onclick="incrementValue('conducted_to_add', 4)">+4</button>
+                    <button type="button" onclick="incrementValue('conducted_to_add', 6)">+6</button>
+                    <button type="button" onclick="incrementValue('conducted_to_add', 8)">+8</button>
+                </div>
+    
+                <button type="submit">Calculate Attendance</button>
+            <!-- Rest of your existing form -->
+        </form>
+    </div>
+
+    <script>
+        function incrementValue(field, value) {
+            const input = document.getElementById(field);
+            let currentValue = parseInt(input.value);
+    
+            if (isNaN(currentValue)) {
+                currentValue = 0; // If the value is not a valid number, treat it as 0
+            }
+            
+            // Increment the value
+            input.value = currentValue + value;
+        }
+    
+        function clearDefaultValue(input) {
+            // Only clear the default value when it is exactly 0
+            if (input.value === "0") {
+                input.value = "";
+            }
+        }
+    
+        function restoreDefaultValue(input) {
+            // If the input is empty, restore it back to "0"
+            if (input.value === "") {
+                input.value = "0";
+            }
+        }
+    
+        // You might need to ensure the default value (0) is set when the page is loaded or reset.
+        window.onload = function() {
+            const inputs = document.querySelectorAll("input");
+            inputs.forEach(input => {
+                if (input.value === "") {
+                    input.value = "0";
+                }
+            });
+        };
+    </script>
+    
+</body>
+</html>
