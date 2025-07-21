@@ -1,0 +1,6 @@
+[build]
+  command = "npm run build"   # tells Netlify how to build your project
+  publish = "build"           # folder to publish
+
+[build.environment]
+  PYTHON_VERSION = "3.8.10"   # tells Netlify which Python version to use
